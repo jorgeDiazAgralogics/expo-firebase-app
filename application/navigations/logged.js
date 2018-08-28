@@ -1,9 +1,12 @@
 import React from 'react';
 import RestaurantsScreen from "../screens/Restaurants/Restaurants";
-import AddRestaurantsScreen from "../screens/Restaurants/AddRestaurant";
+import AddRestaurantScreen from "../screens/Restaurants/AddRestaurant";
+import DetailRestaurantScreen from "../screens/Restaurants/DetailRestaurant";
+import EditRestaurantScreen from "../screens/Restaurants/EditRestaurant";
 import LogoutScreen from "../screens/Logout";
 import {createDrawerNavigator, createStackNavigator} from "react-navigation";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ProfileScreen from '../screens/Profile';
 
 console.disableYellowBox = true;
 
@@ -39,7 +42,7 @@ const rightIcon = (navigation, icon) => <Icon
 />;
 
 const restaurantsScreenStack = createStackNavigator(
-    {
+	{
 		ListRestaurants: {
 			screen: RestaurantsScreen,
 			navigationOptions: ({navigation}) => ({
@@ -48,45 +51,79 @@ const restaurantsScreenStack = createStackNavigator(
 			})
 		},
 		AddRestaurant: {
-			screen: AddRestaurantsScreen,
+			screen: AddRestaurantScreen,
 			navigationOptions: ({navigation}) => ({
 				title: 'Añadir restaurante',
-				headerRigth: rightIcon(navigation, 'home'),
-				headerLeft: leftIcon(navigation, 'bars')
-
+				headerRight: rightIcon(navigation, 'home'),
+				headerLeft: leftIcon(navigation, 'bars'),
+			})
+		},
+		DetailRestaurant: {
+			screen: DetailRestaurantScreen,
+			navigationOptions: ({navigation}) => ({
+				title: 'Detalle del restaurante',
+				headerRight: rightIcon(navigation, 'home'),
+				headerLeft: leftIcon(navigation, 'bars'),
+			})
+		},
+		EditRestaurant: {
+			screen: EditRestaurantScreen,
+			navigationOptions: ({navigation}) => ({
+				title: 'Editar restaurante',
+				headerRight: rightIcon(navigation, 'home')
 			})
 		}
-    },
-    navigationOptions
+	},
+	navigationOptions
 );
 
-const LogoutScreenStack = createStackNavigator({
+const profileScreenStack = createStackNavigator(
+	{
+		ProfileScreen: {
+			screen: ProfileScreen,
+			navigationOptions: ({navigation}) => ({
+				title: 'Perfil',
+				headerLeft: leftIcon(navigation, 'bars'),
+				headerRight: rightIcon(navigation, 'home')
+			})
+		}
+	},
+	navigationOptions
+)
+
+const logoutScreenStack = createStackNavigator({
 	LogoutScreen: {
 		screen: LogoutScreen,
-		navigationOptions: ({navigation}) => ({
-			title: 'Cerrar sesión',
-			headerLeft: leftIcon(navigation, 'bars')
+		navigationOptions: ({ navigation }) => ({
+			title: 'Cerrar sesión'
 		})
 	}
 });
 
 export default createDrawerNavigator(
-    {
+	{
 		RestaurantsScreen: {
 			screen: restaurantsScreenStack,
 			navigationOptions: ({navigation}) => ({
 				drawerLabel: 'Restaurantes',
-				drawerIcon: ({tintColor}) => (<Icon name="home" size={24} style={{color: tintColor}} />)
+				drawerIcon: ({tintColor}) => (<Icon name='home' size={30} style={{color: tintColor}} />)
+			})
+		},
+		ProfileScreen: {
+			screen: profileScreenStack,
+			navigationOptions: ({navitagion}) => ({
+				drawerLabel: 'Perfil',
+				drawerIcon: ({tintColor}) => (<Icon name='user' size={30} style={{color: tintColor}} />)
 			})
 		},
 		LogoutScreen: {
-			screen: LogoutScreenStack,
-			navigationOptions: ({navigaion}) => ({
+			screen: logoutScreenStack,
+			navigationOptions: ({navitagion}) => ({
 				drawerLabel: 'Cerrar sesión',
-				drawerIcon: ({tintColor}) => (<Icon name="sign-out" size={24} style={{color: tintColor}} />)
+				drawerIcon: ({tintColor}) => (<Icon name='sign-out' size={30} style={{color: tintColor}} />)
 			})
 		}
-    },
+	},
 	{
 		drawerBackgroundColor : 'rgba(128, 35, 60, 0.7)',
 		contentOptions: {
